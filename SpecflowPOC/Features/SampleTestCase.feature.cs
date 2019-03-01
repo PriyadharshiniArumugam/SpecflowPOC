@@ -99,11 +99,13 @@ this.ScenarioSetup(scenarioInfo);
         [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("Check_appointment_is_not_booked_successfully")]
         [NUnit.Framework.CategoryAttribute("mytag")]
+        [NUnit.Framework.CategoryAttribute("newtag")]
         [NUnit.Framework.TestCaseAttribute("https://katalon-demo-cura.herokuapp.com/", "John Doe", "ThisIsNotAPassword", "Make Appointment", "11/12/2019", "Booking Appointment", "Appointment Confirmatio", null)]
         public virtual void Check_Appointment_Is_Not_Booked_Successfully(string uRL, string username, string password, string pagetitle1, string date, string comments, string pagetitle2, string[] exampleTags)
         {
             string[] @__tags = new string[] {
-                    "mytag"};
+                    "mytag",
+                    "newtag"};
             if ((exampleTags != null))
             {
                 @__tags = System.Linq.Enumerable.ToArray(System.Linq.Enumerable.Concat(@__tags, exampleTags));

@@ -14,7 +14,7 @@ Examples:
 | URL                                      | username | password           | pagetitle1       | Date       | Comments            | pagetitle2               |
 | https://katalon-demo-cura.herokuapp.com/ | John Doe | ThisIsNotAPassword | Make Appointment | 11/12/2019 | Booking Appointment | Appointment Confirmation |
 
-@mytag
+@mytag @newtag
 Scenario Outline: Check_appointment_is_not_booked_successfully
  Given Navigate to the <URL>
  And Navigate to Home Page
