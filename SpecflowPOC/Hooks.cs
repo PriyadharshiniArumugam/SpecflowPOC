@@ -38,7 +38,7 @@ namespace SpecflowPOC
         {
             string filePath = Path.GetFullPath(Path.Combine(Path.GetDirectoryName(Assembly.GetAssembly(typeof(Hooks)).Location), @"..\..\"));
             string fileName = "Automation_Report" + System.DateTime.Now.Millisecond;
-            string savePath = filePath + @"Reports\"  + fileName + ".html";
+            string savePath = filePath + @"Reports\" + fileName + ".html";
             ExtentHtmlReporter htmlreport = new ExtentHtmlReporter(savePath);
             htmlreport.AnalysisStrategy = AnalysisStrategy.BDD;
             htmlreport.Config.Theme = AventStack.ExtentReports.Reporter.Configuration.Theme.Standard;
@@ -64,23 +64,26 @@ namespace SpecflowPOC
         [BeforeScenario]
         public void BeforeScenario()
         {
-            var browser = ConfigurationManager.AppSettings["browser"];
-            switch(browser)
+            if (ScenarioContext.Current.ScenarioInfo.Tags.Contains("UI"))
             {
-                case "IE":
-                    _driver = new InternetExplorerDriver();
-                    break;
-                case "Chrome":
-                    _driver = new ChromeDriver();
-                    break;
-                case "Firefox":
-                    _driver = new FirefoxDriver();
-                    break;
+                var browser = ConfigurationManager.AppSettings["browser"];
+                switch (browser)
+                {
+                    case "IE":
+                        _driver = new InternetExplorerDriver();
+                        break;
+                    case "Chrome":
+                        _driver = new ChromeDriver();
+                        break;
+                    case "Firefox":
+                        _driver = new FirefoxDriver();
+                        break;
+                }
+                //TODO: implement logic that has to run before executing each scenario
+
+                _objectContainer.RegisterInstanceAs<IWebDriver>(_driver);
+                _driver.Manage().Window.Maximize();
             }
-            //TODO: implement logic that has to run before executing each scenario
-            
-            _objectContainer.RegisterInstanceAs<IWebDriver>(_driver);
-            _driver.Manage().Window.Maximize();
             _scenerioName = _featureName.CreateNode<Scenario>(ScenarioContext.Current.ScenarioInfo.Title);
         }
 
@@ -88,19 +91,25 @@ namespace SpecflowPOC
         public void AfterScenario()
         {
             //TODO: implement logic that has to run after executing each scenario
-            _driver.Quit();
+            if (ScenarioContext.Current.ScenarioInfo.Tags.Contains("UI"))
+            {
+                _driver.Quit();
+            }
         }
 
         [AfterStep]
         public void AfterStep()
         {
-            //Screenshots
-            Screenshot ss = ((ITakesScreenshot)_driver).GetScreenshot();
-            string filePath = Path.GetFullPath(Path.Combine(Path.GetDirectoryName(Assembly.GetAssembly(typeof(Hooks)).Location), @"..\..\"));
-            string fileName = ScenarioContext.Current.ScenarioInfo.Title + System.DateTime.Now.Millisecond;
-            string fullFilePath = filePath + @"\Screenshots\" + fileName + ".png";
-            ss.SaveAsFile(fullFilePath, ScreenshotImageFormat.Png);
-
+            string fullFilePath = null;
+            if (ScenarioContext.Current.ScenarioInfo.Tags.Contains("UI"))
+            {
+                //Screenshots
+                Screenshot ss = ((ITakesScreenshot)_driver).GetScreenshot();
+                string filePath = Path.GetFullPath(Path.Combine(Path.GetDirectoryName(Assembly.GetAssembly(typeof(Hooks)).Location), @"..\..\"));
+                string fileName = ScenarioContext.Current.ScenarioInfo.Title + System.DateTime.Now.Millisecond;
+                fullFilePath = filePath + @"\Screenshots\" + fileName + ".png";
+                ss.SaveAsFile(fullFilePath, ScreenshotImageFormat.Png);
+            }           
             var stepType = ScenarioStepContext.Current.StepInfo.StepDefinitionType.ToString();
 
             if (ScenarioContext.Current.ScenarioExecutionStatus == ScenarioExecutionStatus.StepDefinitionPending)
@@ -145,23 +154,44 @@ namespace SpecflowPOC
                 }
                 else if (ScenarioContext.Current.TestError != null)
                 {
-                    if (stepType == "Given")
+                    if(ScenarioContext.Current.ScenarioInfo.Tags.Contains("UI"))
                     {
-                        _scenerioName.CreateNode<Given>(ScenarioStepContext.Current.StepInfo.Text).Fail(ScenarioContext.Current.TestError.InnerException).AddScreenCaptureFromPath(fullFilePath);                         
+                        if (stepType == "Given")
+                        {
+                            _scenerioName.CreateNode<Given>(ScenarioStepContext.Current.StepInfo.Text).Fail(ScenarioContext.Current.TestError.InnerException).AddScreenCaptureFromPath(fullFilePath);
+                        }
+                        else if (stepType == "When")
+                        {
+                            _scenerioName.CreateNode<When>(ScenarioStepContext.Current.StepInfo.Text).Fail(ScenarioContext.Current.TestError.InnerException).AddScreenCaptureFromPath(fullFilePath);
+                        }
+                        else if (stepType == "And")
+                        {
+                            _scenerioName.CreateNode<And>(ScenarioStepContext.Current.StepInfo.Text).Fail(ScenarioContext.Current.TestError.InnerException).AddScreenCaptureFromPath(fullFilePath);
+                        }
+                        else if (stepType == "Then")
+                        {
+                            _scenerioName.CreateNode<Then>(ScenarioStepContext.Current.StepInfo.Text).Fail(ScenarioContext.Current.TestError.Message).AddScreenCaptureFromPath(fullFilePath);
+                        }
                     }
-                    else if (stepType == "When")
+                    else if(ScenarioContext.Current.ScenarioInfo.Tags.Contains("API"))
                     {
-                        _scenerioName.CreateNode<When>(ScenarioStepContext.Current.StepInfo.Text).Fail(ScenarioContext.Current.TestError.InnerException).AddScreenCaptureFromPath(fullFilePath);         
+                        if (stepType == "Given")
+                        {
+                            _scenerioName.CreateNode<Given>(ScenarioStepContext.Current.StepInfo.Text).Fail(ScenarioContext.Current.TestError.InnerException);
+                        }
+                        else if (stepType == "When")
+                        {
+                            _scenerioName.CreateNode<When>(ScenarioStepContext.Current.StepInfo.Text).Fail(ScenarioContext.Current.TestError.InnerException);
+                        }
+                        else if (stepType == "And")
+                        {
+                            _scenerioName.CreateNode<And>(ScenarioStepContext.Current.StepInfo.Text).Fail(ScenarioContext.Current.TestError.InnerException);
+                        }
+                        else if (stepType == "Then")
+                        {
+                            _scenerioName.CreateNode<Then>(ScenarioStepContext.Current.StepInfo.Text).Fail(ScenarioContext.Current.TestError.Message);
+                        }
                     }
-                    else if (stepType == "And")
-                    {
-                        _scenerioName.CreateNode<And>(ScenarioStepContext.Current.StepInfo.Text).Fail(ScenarioContext.Current.TestError.InnerException).AddScreenCaptureFromPath(fullFilePath);                            
-                    }
-                    else if (stepType == "Then")
-                    {
-                        _scenerioName.CreateNode<Then>(ScenarioStepContext.Current.StepInfo.Text).Fail(ScenarioContext.Current.TestError.Message).AddScreenCaptureFromPath(fullFilePath);
-                    }
-
                 }
             }
         }
