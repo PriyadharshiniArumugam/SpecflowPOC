@@ -65,12 +65,12 @@ namespace SpecflowPOC.Features
         
         [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("Check_appointment_is_booked_successfully")]
-        [NUnit.Framework.CategoryAttribute("mytag")]
+        [NUnit.Framework.CategoryAttribute("UI")]
         [NUnit.Framework.TestCaseAttribute("https://katalon-demo-cura.herokuapp.com/", "John Doe", "ThisIsNotAPassword", "Make Appointment", "11/12/2019", "Booking Appointment", "Appointment Confirmation", null)]
         public virtual void Check_Appointment_Is_Booked_Successfully(string uRL, string username, string password, string pagetitle1, string date, string comments, string pagetitle2, string[] exampleTags)
         {
             string[] @__tags = new string[] {
-                    "mytag"};
+                    "UI"};
             if ((exampleTags != null))
             {
                 @__tags = System.Linq.Enumerable.ToArray(System.Linq.Enumerable.Concat(@__tags, exampleTags));
@@ -98,20 +98,12 @@ this.ScenarioSetup(scenarioInfo);
         
         [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("Check_appointment_is_not_booked_successfully")]
-        [NUnit.Framework.CategoryAttribute("mytag")]
-        [NUnit.Framework.CategoryAttribute("newtag")]
-        [NUnit.Framework.CategoryAttribute("TestTag")]
-        [NUnit.Framework.CategoryAttribute("New")]
-        [NUnit.Framework.CategoryAttribute("Tag")]
+        [NUnit.Framework.CategoryAttribute("UI")]
         [NUnit.Framework.TestCaseAttribute("https://katalon-demo-cura.herokuapp.com/", "John Doe", "ThisIsNotAPassword", "Make Appointment", "11/12/2019", "Booking Appointment", "Appointment Confirmatio", null)]
         public virtual void Check_Appointment_Is_Not_Booked_Successfully(string uRL, string username, string password, string pagetitle1, string date, string comments, string pagetitle2, string[] exampleTags)
         {
             string[] @__tags = new string[] {
-                    "mytag",
-                    "newtag",
-                    "TestTag",
-                    "New",
-                    "Tag"};
+                    "UI"};
             if ((exampleTags != null))
             {
                 @__tags = System.Linq.Enumerable.ToArray(System.Linq.Enumerable.Concat(@__tags, exampleTags));
@@ -139,12 +131,12 @@ this.ScenarioSetup(scenarioInfo);
         
         [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("Check_appointment_is_booked_after_5Days")]
-        [NUnit.Framework.CategoryAttribute("mytag")]
+        [NUnit.Framework.CategoryAttribute("UI")]
         [NUnit.Framework.TestCaseAttribute("https://katalon-demo-cura.herokuapp.com/", "John Doe", "ThisIsNotAPassword", "Make Appointment", "Booking Appointment", "Appointment Confirmation", "6", null)]
         public virtual void Check_Appointment_Is_Booked_After_5Days(string uRL, string username, string password, string pagetitle1, string comments, string pagetitle2, string daysCount, string[] exampleTags)
         {
             string[] @__tags = new string[] {
-                    "mytag"};
+                    "UI"};
             if ((exampleTags != null))
             {
                 @__tags = System.Linq.Enumerable.ToArray(System.Linq.Enumerable.Concat(@__tags, exampleTags));
@@ -170,6 +162,79 @@ this.ScenarioSetup(scenarioInfo);
  testRunner.Then(string.Format("Verify appointment is booked successfully as {0}", pagetitle2), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line 41
  testRunner.Given("Verify application is logged out", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("Check_AuthorName_GetMethod")]
+        [NUnit.Framework.CategoryAttribute("API")]
+        [NUnit.Framework.TestCaseAttribute("posts/2", "author", "Priya", null)]
+        public virtual void Check_AuthorName_GetMethod(string resourceURL1, string property, string propValues, string[] exampleTags)
+        {
+            string[] @__tags = new string[] {
+                    "API"};
+            if ((exampleTags != null))
+            {
+                @__tags = System.Linq.Enumerable.ToArray(System.Linq.Enumerable.Concat(@__tags, exampleTags));
+            }
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Check_AuthorName_GetMethod", @__tags);
+#line 48
+this.ScenarioSetup(scenarioInfo);
+#line 49
+testRunner.Given(string.Format("Navigate to Endpoint with {0}", resourceURL1), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 50
+testRunner.And("I request to view automation details", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 51
+testRunner.Then(string.Format("I Validate the {0} and its values as {1}", property, propValues), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("Add_AuthorName_AnonymousPostMethod")]
+        [NUnit.Framework.CategoryAttribute("API")]
+        [NUnit.Framework.TestCaseAttribute("profile", "name", "MyAPITesting", "MyAPITesting", null)]
+        public virtual void Add_AuthorName_AnonymousPostMethod(string resourceURL1, string property, string propValues, string profileName, string[] exampleTags)
+        {
+            string[] @__tags = new string[] {
+                    "API"};
+            if ((exampleTags != null))
+            {
+                @__tags = System.Linq.Enumerable.ToArray(System.Linq.Enumerable.Concat(@__tags, exampleTags));
+            }
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Add_AuthorName_AnonymousPostMethod", @__tags);
+#line 58
+this.ScenarioSetup(scenarioInfo);
+#line 59
+testRunner.Given(string.Format("Navigate to Endpoint with {0}", resourceURL1), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 60
+testRunner.And(string.Format("I request to add automation details profile {0}", profileName), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 61
+testRunner.Then(string.Format("I Validate the {0} and its values as {1}", property, propValues), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("Add_AuthorName_PostMethod")]
+        [NUnit.Framework.CategoryAttribute("API")]
+        [NUnit.Framework.TestCaseAttribute("posts", "author", "Hari,Sasi", null)]
+        public virtual void Add_AuthorName_PostMethod(string resourceURL1, string property1, string propValues, string[] exampleTags)
+        {
+            string[] @__tags = new string[] {
+                    "API"};
+            if ((exampleTags != null))
+            {
+                @__tags = System.Linq.Enumerable.ToArray(System.Linq.Enumerable.Concat(@__tags, exampleTags));
+            }
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Add_AuthorName_PostMethod", @__tags);
+#line 68
+this.ScenarioSetup(scenarioInfo);
+#line 69
+testRunner.Given(string.Format("Navigate to Endpoint with {0}", resourceURL1), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 70
+testRunner.Then(string.Format("I request to add automation details and validate {0} and its {1}", property1, propValues), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
         }

@@ -20,6 +20,7 @@ namespace SpecflowPOC.Steps
         LoginPage LoginPage;
         BookAppointmentPage BookAppointmentPage;
         AppointmentSummaryPage AppointmentSummaryPage;
+        
         #endregion
 
         #region Constructor
