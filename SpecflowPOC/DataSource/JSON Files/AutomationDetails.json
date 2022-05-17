@@ -1,0 +1,39 @@
+{
+  "posts": [
+    {
+      "id": 1,
+      "title": "SpecflowUIDemo",
+      "author": "Banu"
+    },
+    {
+      "id": 2,
+      "title": "SpecflowAPIDemo",
+      "author": "Priya"
+    },
+    {
+      "id": 3,
+      "title": "APITest1",
+      "author": "Hari"
+    },
+    {
+      "id": 4,
+      "title": "APITest2",
+      "author": "Sasi"
+    }
+  ],
+  "comments": [
+    {
+      "id": 1,
+      "body": "Specflow C# Selenium",
+      "postId": 1
+    },
+    {
+      "id": 2,
+      "body": "Specflow C# RestSharp",
+      "postId": 2
+    }
+  ],
+  "profile": {
+    "name": "Testing"
+  }
+}

@@ -1,6 +1,6 @@
 ﻿Feature: Sample Test Case to check the appointment is booked
 
-@mytag
+@UI
 Scenario Outline: Check_appointment_is_booked_successfully
  Given Navigate to the <URL>
  And Navigate to Home Page
@@ -15,6 +15,7 @@ Examples:
 | https://katalon-demo-cura.herokuapp.com/ | John Doe | ThisIsNotAPassword | Make Appointment | 11/12/2019 | Booking Appointment | Appointment Confirmation |
 
 @mytag @newtag @TestTag
+@UI
 Scenario Outline: Check_appointment_is_not_booked_successfully
  Given Navigate to the <URL>
  And Navigate to Home Page
@@ -28,7 +29,7 @@ Examples:
 | URL                                      | username | password           | pagetitle1       | Date       | Comments            | pagetitle2              |
 | https://katalon-demo-cura.herokuapp.com/ | John Doe | ThisIsNotAPassword | Make Appointment | 11/12/2019 | Booking Appointment | Appointment Confirmatio |
 
-@mytag
+@UI
 Scenario Outline: Check_appointment_is_booked_after_5Days
  Given Navigate to the <URL>
  And Navigate to Home Page
@@ -43,3 +44,35 @@ Scenario Outline: Check_appointment_is_booked_after_5Days
 Examples:
 | URL                                      | username | password           | pagetitle1       | Comments            | pagetitle2               | DaysCount |
 | https://katalon-demo-cura.herokuapp.com/ | John Doe | ThisIsNotAPassword | Make Appointment | Booking Appointment | Appointment Confirmation | 6         |
+
+@API
+Scenario Outline: Check_AuthorName_GetMethod
+Given Navigate to Endpoint with <ResourceURL1>
+And I request to view automation details
+Then I Validate the <Property> and its values as <PropValues>
+
+Examples:
+| ResourceURL1 | Property | PropValues |
+| posts/2      | author   | Priya      |
+
+@API
+Scenario Outline: Add_AuthorName_AnonymousPostMethod
+Given Navigate to Endpoint with <ResourceURL1>
+And I request to add automation details profile <profileName>
+Then I Validate the <Property> and its values as <PropValues>
+
+Examples:
+| ResourceURL1 | Property  | PropValues   | profileName  |
+| profile      | name      | MyAPITesting | MyAPITesting |
+
+@API
+Scenario Outline: Add_AuthorName_PostMethod
+Given Navigate to Endpoint with <ResourceURL1>
+Then I request to add automation details and validate <Property1> and its <PropValues>
+
+Examples:
+| ResourceURL1 | Property1 | PropValues |
+| posts        | author    | Hari,Sasi  |
+
+
+
